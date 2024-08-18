@@ -1,0 +1,1 @@
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Book_Sale_Fair.Global_asax" Language="C#" %>
