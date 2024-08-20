@@ -129,9 +129,9 @@ html
 
 .header-logo
 {
-    background: url('Images/logo.svg') no-repeat center;
-    height: 26px;
-    width: 150px;
+    background: url('Images/logo-header.png') no-repeat center;
+    height: 35px;
+    width: 35px;
 }
 
 @media (max-width: 359px)

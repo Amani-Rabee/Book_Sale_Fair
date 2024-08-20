@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using Book_Sale_Fair.Model;
 using DevExpress.Web;
 
-namespace Book_Sale_Fair {
-    public partial class Root : MasterPage {
+namespace Book_Sale_Fair
+{
+    public partial class Root : MasterPage
+    {
         public bool EnableBackButton { get; set; }
-        protected void Page_Load(object sender, EventArgs e) {
-            if(!string.IsNullOrEmpty(Page.Header.Title))
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Page.Header.Title))
                 Page.Header.Title += " - ";
-            Page.Header.Title = Page.Header.Title + "ASP.NET WebForms/MVC Responsive Web Application Template | DevExpress";
+            Page.Header.Title = Page.Header.Title + "Book Sale Fair";
 
             Page.Header.DataBind();
             UpdateUserMenuItemsVisible();
@@ -18,71 +21,95 @@ namespace Book_Sale_Fair {
             UpdateUserInfo();
         }
 
-        protected void HideUnusedContent() {
-            LeftAreaMenu.Items[1].Visible = EnableBackButton;
+        protected void HideUnusedContent()
+        {
+            var isAuthenticated = AuthHelper.IsAuthenticated();
+            var isAdmin = false; // Placeholder for admin check
+            var isEmployee = false; // Placeholder for employee check
 
-            bool hasLeftPanelContent = HasContent(LeftPanelContent);
-            LeftAreaMenu.Items.FindByName("ToggleLeftPanel").Visible = hasLeftPanelContent;
-            LeftPanel.Visible = hasLeftPanelContent;
+            if (isAuthenticated)
+            {
+                var loggedInUser = AuthHelper.GetLoggedInUserInfo();
+                if (loggedInUser != null)
+                {
+                    
+                }
+            }
 
-            bool hasRightPanelContent = HasContent(RightPanelContent);
-            RightAreaMenu.Items.FindByName("ToggleRightPanel").Visible = hasRightPanelContent;
-            RightPanel.Visible = hasRightPanelContent;
+            // Hide or show content based on roles
+            if (isAuthenticated && !isAdmin)
+            {
+                // Example: Hide Admin-specific content
+            }
 
-            bool hasPageToolbar = HasContent(PageToolbar);
-            PageToolbarPanel.Visible = hasPageToolbar;
+            if (isAuthenticated && !isEmployee)
+            {
+                // Example: Hide Employee-specific content
+            }
         }
 
-        protected bool HasContent(Control contentPlaceHolder) {
-            if(contentPlaceHolder == null) return false;
-
-            ControlCollection childControls = contentPlaceHolder.Controls;
-            if(childControls.Count == 0) return false;
-
-            return true;
+        protected bool HasContent(Control contentPlaceHolder)
+        {
+            return contentPlaceHolder?.Controls.Count > 0;
         }
 
-        // SignIn/Register
+        protected void UpdateUserMenuItemsVisible()
+        {
 
-        protected void UpdateUserMenuItemsVisible() {
             var isAuthenticated = AuthHelper.IsAuthenticated();
             RightAreaMenu.Items.FindByName("SignInItem").Visible = !isAuthenticated;
             RightAreaMenu.Items.FindByName("RegisterItem").Visible = !isAuthenticated;
             RightAreaMenu.Items.FindByName("MyAccountItem").Visible = isAuthenticated;
             RightAreaMenu.Items.FindByName("SignOutItem").Visible = isAuthenticated;
+
         }
 
-        protected void UpdateUserInfo() {
-            if(AuthHelper.IsAuthenticated()) {
-                var user = AuthHelper.GetLoggedInUserInfo();
-                var myAccountItem = RightAreaMenu.Items.FindByName("MyAccountItem");
-                var userName = (ASPxLabel)myAccountItem.FindControl("UserNameLabel");
-                var email = (ASPxLabel)myAccountItem.FindControl("EmailLabel");
-                var accountImage = (HtmlGenericControl)RightAreaMenu.Items[0].FindControl("AccountImage");
-                userName.Text = string.Format("{0} ({1} {2})", user.UserName, user.FirstName, user.LastName);
-                email.Text = user.Email;
-                accountImage.Attributes["class"] = "account-image";
+            protected void UpdateUserInfo()
+        {
+            if (AuthHelper.IsAuthenticated())
+            {
+                var userInfo = AuthHelper.GetLoggedInUserInfo();
+                if (userInfo != null)
+                {
+                    var accountMenuItem = (MenuItem)RightAreaMenu.Items.FindByName("AccountItem");
+                    if (accountMenuItem != null)
+                    {
+                        var myAccountItem = (MenuItem)accountMenuItem.Items.FindByName("MyAccountItem");
+                        if (myAccountItem != null)
+                        {
+                            // Access the template of the menu item
+                            var userInfoPanel = (Control)myAccountItem.FindControl("TextTemplate");
+                            if (userInfoPanel != null)
+                            {
+                                var userNameLabel = (ASPxLabel)userInfoPanel.FindControl("UserNameLabel");
+                                var emailLabel = (ASPxLabel)userInfoPanel.FindControl("EmailLabel");
+                                var avatarImage = (ASPxImage)userInfoPanel.FindControl("AvatarUrl");
 
-                if(string.IsNullOrEmpty(user.AvatarUrl)) {
-                    accountImage.InnerHtml = string.Format("{0}{1}", user.FirstName[0], user.LastName[0]).ToUpper();
-                } else {
-                    var avatarUrl = (HtmlImage)myAccountItem.FindControl("AvatarUrl");
-                    avatarUrl.Attributes["src"] = ResolveUrl(user.AvatarUrl);
-                    accountImage.Style["background-image"] = ResolveUrl(user.AvatarUrl);                    
+                                if (userNameLabel != null) userNameLabel.Text = $"{userInfo.FirstName} {userInfo.LastName}";
+                                if (emailLabel != null) emailLabel.Text = userInfo.Email;
+                                if (avatarImage != null) avatarImage.ImageUrl = userInfo.AvatarUrl;
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        protected void RightAreaMenu_ItemClick(object source, DevExpress.Web.MenuItemEventArgs e) {
-            if(e.Item.Name == "SignOutItem") {
-                AuthHelper.SignOut(); // DXCOMMENT: Your Signing out logic
+        protected void RightAreaMenu_ItemClick(object source, DevExpress.Web.MenuItemEventArgs e)
+        {
+            if (e.Item.Name == "SignOutItem")
+            {
+                AuthHelper.SignOut(); // Your Signing out logic
                 Response.Redirect("~/");
             }
         }
 
-        protected void ApplicationMenu_ItemDataBound(object source, MenuItemEventArgs e) {
+        protected void ApplicationMenu_ItemDataBound(object source, MenuItemEventArgs e)
+        {
             e.Item.Image.Url = string.Format("Content/Images/{0}.svg", e.Item.Text);
             e.Item.Image.UrlSelected = string.Format("Content/Images/{0}-white.svg", e.Item.Text);
         }
+
+       
     }
 }

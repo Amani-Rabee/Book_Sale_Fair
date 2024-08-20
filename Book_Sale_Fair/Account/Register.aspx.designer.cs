@@ -7,11 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Book_Sale_Fair {
-    
-    
-    public partial class RegisterModule {
-        
+namespace Book_Sale_Fair
+{
+
+
+    public partial class RegisterModule
+    {
+
+        /// <summary>
+        /// csrfTokenField control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField csrfTokenField;
+
         /// <summary>
         /// SignInRegisterTabControl control.
         /// </summary>
@@ -20,7 +31,7 @@ namespace Book_Sale_Fair {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTabControl SignInRegisterTabControl;
-        
+
         /// <summary>
         /// FormLayout control.
         /// </summary>
@@ -29,7 +40,7 @@ namespace Book_Sale_Fair {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxFormLayout FormLayout;
-        
+
         /// <summary>
         /// RegisterUserNameTextBox control.
         /// </summary>
@@ -38,7 +49,7 @@ namespace Book_Sale_Fair {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox RegisterUserNameTextBox;
-        
+
         /// <summary>
         /// FirstNameTextBox control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace Book_Sale_Fair {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox FirstNameTextBox;
-        
+
         /// <summary>
         /// LastNameTextBox control.
         /// </summary>
@@ -56,7 +67,7 @@ namespace Book_Sale_Fair {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox LastNameTextBox;
-        
+
         /// <summary>
         /// EmailTextBox control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace Book_Sale_Fair {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox EmailTextBox;
-        
+
         /// <summary>
         /// PasswordButtonEdit control.
         /// </summary>
@@ -74,7 +85,7 @@ namespace Book_Sale_Fair {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit PasswordButtonEdit;
-        
+
         /// <summary>
         /// ConfirmPasswordButtonEdit control.
         /// </summary>
@@ -83,7 +94,25 @@ namespace Book_Sale_Fair {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxButtonEdit ConfirmPasswordButtonEdit;
-        
+
+        /// <summary>
+        /// ErrorMessageLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ErrorMessageLabel;
+
+        /// <summary>
+        /// SuccessMessageLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label SuccessMessageLabel;
+
         /// <summary>
         /// RegisterButton control.
         /// </summary>

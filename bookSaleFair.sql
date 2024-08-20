@@ -1,0 +1,30 @@
+
+
+CREATE TABLE Users (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    UserName NVARCHAR(50) NOT NULL UNIQUE,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    Email NVARCHAR(100) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(255) NOT NULL, 
+    AvatarUrl NVARCHAR(255),
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+select * from Users
+ALTER TABLE Users
+ADD VerificationToken NVARCHAR(255) NULL;
+DROP TABLE Users;
+
+CREATE TABLE Users (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    UserName NVARCHAR(50) NOT NULL,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    Email NVARCHAR(100) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    VerificationToken NVARCHAR(255) NULL,
+    EmailVerified BIT NOT NULL DEFAULT 0
+);
+delete from Users where UserID = 4
+
+

@@ -78,3 +78,13 @@ input[type=password]::-ms-clear
     position: static;
     display: table-row;
 }
+.formLayout-registerLink {
+    display: block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .formLayout-registerLink:hover {
+        text-decoration: underline;
+    }

@@ -65,10 +65,33 @@
                                 </LayoutItemNestedControlCollection>
                             </dx:LayoutItem>
 
+                            
+                            <dx:LayoutItem ShowCaption="False">
+                                <LayoutItemNestedControlCollection>
+                                    <dx:LayoutItemNestedControlContainer>
+                                        <asp:HyperLink ID="ForgotPasswordLink" runat="server" NavigateUrl="ForgotPassword.aspx" CssClass="formLayout-forgotPasswordLink">
+                                            Forgot your password?
+                                        </asp:HyperLink>
+                                    </dx:LayoutItemNestedControlContainer>
+                                </LayoutItemNestedControlCollection>
+                            </dx:LayoutItem>
+
+                        
                             <dx:LayoutItem ShowCaption="False" Name="GeneralError">
                                 <LayoutItemNestedControlCollection>
                                     <dx:LayoutItemNestedControlContainer>
-                                        <div id="GeneralErrorDiv" runat="server" class="formLayout-generalErrorText"></div>
+                                        <dx:ASPxLabel ID="ErrorMessageLabel" runat="server" CssClass="formLayout-generalErrorText" ClientVisible="False">
+                                        </dx:ASPxLabel>
+                                    </dx:LayoutItemNestedControlContainer>
+                                </LayoutItemNestedControlCollection>
+                            </dx:LayoutItem>
+
+                            
+                            <dx:LayoutItem ShowCaption="False" Name="SuccessMessage">
+                                <LayoutItemNestedControlCollection>
+                                    <dx:LayoutItemNestedControlContainer>
+                                        <dx:ASPxLabel ID="SuccessMessageLabel" runat="server" CssClass="formLayout-successText" ClientVisible="False">
+                                        </dx:ASPxLabel>
                                     </dx:LayoutItemNestedControlContainer>
                                 </LayoutItemNestedControlCollection>
                             </dx:LayoutItem>
@@ -86,11 +109,20 @@
                                     </dx:LayoutItemNestedControlContainer>
                                 </LayoutItemNestedControlCollection>
                             </dx:LayoutItem>
+
+                            <dx:LayoutItem ShowCaption="False" HorizontalAlign="Center" Paddings-Padding="0">
+                                <LayoutItemNestedControlCollection>
+                                    <dx:LayoutItemNestedControlContainer>
+                                        <asp:HyperLink ID="RegisterLink" runat="server" NavigateUrl="Register.aspx" CssClass="formLayout-registerLink">
+                                            Don't have an account? Register here
+                                        </asp:HyperLink>
+                                    </dx:LayoutItemNestedControlContainer>
+                                </LayoutItemNestedControlCollection>
+                            </dx:LayoutItem>
                         </Items>
                     </dx:LayoutGroup>
                 </Items>
             </dx:ASPxFormLayout>
         </div>
     </div>
-
 </asp:Content>

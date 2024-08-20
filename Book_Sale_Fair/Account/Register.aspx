@@ -1,11 +1,14 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Root.master" CodeBehind="Register.aspx.cs" Inherits="Book_Sale_Fair.RegisterModule" Title="Register" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Root.master" CodeBehind="Register.aspx.cs" Inherits="Book_Sale_Fair.RegisterModule" Title="Register"  Async="true"%>
 
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link rel="stylesheet" type="text/css" href='<%# ResolveUrl("~/Content/SignInRegister.css") %>' />
     <script type="text/javascript" src='<%# ResolveUrl("~/Content/SignInRegister.js") %>'></script>
 </asp:Content>
 
+
 <asp:Content ID="Content" ContentPlaceHolderID="PageContent" runat="server">
+    <asp:HiddenField ID="csrfTokenField" runat="server" />
+
     <div class="formLayout-verticalAlign">
         <div class="formLayout-container">
             <dx:ASPxTabControl ID="SignInRegisterTabControl" runat="server" Width="100%" TabAlign="Justify" Paddings-Padding="0">
@@ -117,6 +120,27 @@
                             </dx:LayoutItem>
                         </Items>
                     </dx:LayoutGroup>
+
+                    <dx:LayoutGroup ShowCaption="False" GroupBoxDecoration="None">
+                        <Items>
+                            <dx:LayoutItem ShowCaption="False">
+                                <LayoutItemNestedControlCollection>
+                                    <dx:LayoutItemNestedControlContainer>
+                                        <asp:Label ID="ErrorMessageLabel" runat="server" ForeColor="Red" CssClass="error-message" />
+                                    </dx:LayoutItemNestedControlContainer>
+                                </LayoutItemNestedControlCollection>
+                            </dx:LayoutItem>
+
+                            <dx:LayoutItem ShowCaption="False">
+                                <LayoutItemNestedControlCollection>
+                                    <dx:LayoutItemNestedControlContainer>
+                                        <asp:Label ID="SuccessMessageLabel" runat="server" ForeColor="Green" CssClass="success-message" />
+                                    </dx:LayoutItemNestedControlContainer>
+                                </LayoutItemNestedControlCollection>
+                            </dx:LayoutItem>
+                        </Items>
+                    </dx:LayoutGroup>
+
                     <dx:LayoutGroup GroupBoxDecoration="HeadingLine" ShowCaption="False">
                         <Paddings PaddingTop="13" PaddingBottom="13" />
                         <GroupBoxStyle CssClass="formLayout-groupBox" />
@@ -134,5 +158,4 @@
             </dx:ASPxFormLayout>
         </div>
     </div>
-
 </asp:Content>

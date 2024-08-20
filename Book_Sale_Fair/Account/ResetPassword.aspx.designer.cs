@@ -11,17 +11,8 @@ namespace Book_Sale_Fair
 {
 
 
-    public partial class Root
+    public partial class ResetPassword
     {
-
-        /// <summary>
-        /// Head control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder Head;
 
         /// <summary>
         /// form1 control.
@@ -33,39 +24,39 @@ namespace Book_Sale_Fair
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// HeaderPanel control.
+        /// NewPasswordLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxPanel HeaderPanel;
+        protected global::System.Web.UI.WebControls.Label NewPasswordLabel;
 
         /// <summary>
-        /// LeftAreaMenu control.
+        /// NewPasswordTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxMenu LeftAreaMenu;
+        protected global::System.Web.UI.WebControls.TextBox NewPasswordTextBox;
 
         /// <summary>
-        /// RightAreaMenu control.
+        /// ResetPasswordButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxMenu RightAreaMenu;
+        protected global::System.Web.UI.WebControls.Button ResetPasswordButton;
 
         /// <summary>
-        /// PageContent control.
+        /// MessageLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder PageContent;
+        protected global::System.Web.UI.WebControls.Label MessageLabel;
     }
 }
