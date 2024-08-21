@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Root.master" CodeBehind="SignIn.aspx.cs" Inherits="Book_Sale_Fair.SignInModule" Title="Sign In" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Root.master" CodeBehind="SignIn.aspx.cs" Inherits="Book_Sale_Fair.SignInModule" Title="Sign In" Async="true" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link rel="stylesheet" type="text/css" href='<%# ResolveUrl("~/Content/SignInRegister.css") %>' />

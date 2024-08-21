@@ -2,6 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <LangVersion>6.0</LangVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>
@@ -161,6 +163,8 @@
     <Content Include="Content\Photo\Shannon_Sanz.jpg" />
     <Content Include="Content\Photo\User.png" />
     <Content Include="Content\Photo\Xavier_Richardson.jpg" />
+    <Content Include="Content\Preferences.css" />
+    <Content Include="Content\Preferences.js" />
     <Content Include="Content\Scheduler.css" />
     <Content Include="Content\Scheduler.js" />
     <Content Include="Content\Script.js" />

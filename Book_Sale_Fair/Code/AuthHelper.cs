@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Book_Sale_Fair.Model
@@ -17,7 +18,7 @@ namespace Book_Sale_Fair.Model
         //
         //sign in related methods
         //
-        public static bool SignIn(string userName, string password)
+        public static async Task<bool> SignInAsync(string userName, string password)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -25,27 +26,26 @@ namespace Book_Sale_Fair.Model
                 System.Diagnostics.Debug.WriteLine($"Hash: {hashPass}");
 
                 var query = @"
-        SELECT UserName, FirstName, LastName, Email, InvalidLoginAttempts, LockoutEndDate, PasswordHash
-        FROM Users
-        WHERE UserName = @UserName";
+            SELECT UserName, FirstName, LastName, Email, InvalidLoginAttempts, LockoutEndDate, PasswordHash
+            FROM Users
+            WHERE UserName = @UserName";
 
                 using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@UserName", userName);
 
-                    connection.Open();
-                    using (var reader = command.ExecuteReader())
+                    await connection.OpenAsync();
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        if (reader.Read())
+                        if (await reader.ReadAsync())
                         {
                             int invalidAttempts = reader.GetInt32(reader.GetOrdinal("InvalidLoginAttempts"));
                             DateTime? lockoutEndDate = reader.IsDBNull(reader.GetOrdinal("LockoutEndDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("LockoutEndDate"));
 
-                            // If the account is locked and the lockout time has expired, reset the attempts
                             if (lockoutEndDate.HasValue && lockoutEndDate.Value <= DateTime.Now)
                             {
                                 ResetInvalidLoginAttempts(userName);
-                                invalidAttempts = 0; // Reset invalid attempts locally as well
+                                invalidAttempts = 0;
                                 lockoutEndDate = null;
                             }
 
@@ -59,13 +59,22 @@ namespace Book_Sale_Fair.Model
                                 // Reset invalid login attempts
                                 ResetInvalidLoginAttempts(userName);
 
-                                HttpContext.Current.Session["User"] = new ApplicationUser
+                                if (HttpContext.Current != null)
                                 {
-                                    UserName = reader["UserName"].ToString(),
-                                    FirstName = reader["FirstName"].ToString(),
-                                    LastName = reader["LastName"].ToString(),
-                                    Email = reader["Email"].ToString()
-                                };
+                                    HttpContext.Current.Session["User"] = new ApplicationUser
+                                    {
+                                        UserName = reader["UserName"].ToString(),
+                                        FirstName = reader["FirstName"].ToString(),
+                                        LastName = reader["LastName"].ToString(),
+                                        Email = reader["Email"].ToString()
+                                    };
+                                }
+                                else
+                                {
+                                    // Handle the null context scenario
+                                    throw new InvalidOperationException("HttpContext is not available.");
+                                }
+
                                 return true;
                             }
                             else
@@ -80,6 +89,7 @@ namespace Book_Sale_Fair.Model
             }
             return false;
         }
+
         private static void IncrementInvalidLoginAttempts(string userName)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -398,9 +408,25 @@ namespace Book_Sale_Fair.Model
         {
             return HttpContext.Current.Session["User"] as ApplicationUser;
         }
-        
-        
-        
+        public static bool HasSetPreferences(string userName)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var query = "SELECT HasSetPreferences FROM Users WHERE UserName = @UserName";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserName", userName);
+
+                    connection.Open();
+                    var result = command.ExecuteScalar();
+                    return result != null && Convert.ToBoolean(result);
+                }
+            }
+        }
+
+
+
+
     }
 
     public class ApplicationUser

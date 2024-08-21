@@ -34,12 +34,27 @@ namespace Book_Sale_Fair
                 }
 
                 // Perform user authentication asynchronously using the correct SignIn method
-                bool isAuthenticated = await Task.Run(() => AuthHelper.SignIn(userName, password));
+                bool isAuthenticated = await AuthHelper.SignInAsync(userName, password);
 
                 if (isAuthenticated)
                 {
-                    // Redirect to the home page or dashboard after successful sign-in
-                    Response.Redirect("HomePage.aspx");
+                    var userInfo = AuthHelper.GetLoggedInUserInfo();
+                    if (userInfo != null)
+                    {
+                        // Check if the user has set their preferences
+                        bool hasSetPreferences = await Task.Run(() => AuthHelper.HasSetPreferences(userInfo.UserName));
+
+                        if (!hasSetPreferences)
+                        {
+                            // Redirect to the Select Preferences page if preferences haven't been set
+                            Response.Redirect($"~/Preferences.aspx?username={userInfo.UserName}");
+                        }
+                        else
+                        {
+                            // Redirect to the home page after successful sign-in
+                            Response.Redirect("HomePage.aspx");
+                        }
+                    }
                 }
                 else
                 {
@@ -58,12 +73,12 @@ namespace Book_Sale_Fair
             // Redirect to the registration page
             Response.Redirect("~/Register.aspx");
         }
+
         private void DisplayError(string message)
         {
             ErrorMessageLabel.Text = message;
             ErrorMessageLabel.Visible = true;
             SuccessMessageLabel.Visible = false;
         }
-
     }
 }
