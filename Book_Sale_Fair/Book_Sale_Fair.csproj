@@ -81,15 +81,20 @@
     <Content Include="App_Data\Overview.html" />
     <Content Include="App_Data\OverviewContents.xml" />
     <Content Include="Article.aspx" />
+    <Content Include="Cart.aspx" />
+    <Content Include="Content\cart.css" />
     <Content Include="Content\Content.css" />
     <Content Include="Content\GridView.css" />
     <Content Include="Content\GridView.js" />
+    <Content Include="Content\home.css" />
+    <Content Include="Content\home.js" />
     <Content Include="Content\Images\adaptive-menu.svg" />
     <Content Include="Content\Images\add.svg" />
     <Content Include="Content\Images\application.svg" />
     <Content Include="Content\Images\Article-white.svg" />
     <Content Include="Content\Images\Article.svg" />
     <Content Include="Content\Images\back.svg" />
+    <Content Include="Content\Images\cart-icon.svg" />
     <Content Include="Content\Images\delete.svg" />
     <Content Include="Content\Images\double-close.svg" />
     <Content Include="Content\Images\double.svg" />
@@ -133,6 +138,7 @@
     <Content Include="Content\Images\sign-out.svg" />
     <Content Include="Content\Images\user.svg" />
     <Content Include="Content\Layout.css" />
+    <Content Include="Content\orders.css" />
     <Content Include="Content\Photo\Alberto_Alonso.jpg" />
     <Content Include="Content\Photo\Alfredo_Gomez.jpg" />
     <Content Include="Content\Photo\Andrew_Lee.jpg" />
@@ -174,6 +180,10 @@
     <Content Include="Global.asax" />
     <Content Include="GridView.aspx" />
     <Content Include="GridViewDetailsPage.aspx" />
+    <Content Include="Home.aspx" />
+    <Content Include="OrderDetails.aspx" />
+    <Content Include="Orders.aspx" />
+    <Content Include="Preferences.aspx" />
     <Content Include="Scheduler.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +241,13 @@
     <Compile Include="Article.aspx.designer.cs">
       <DependentUpon>Article.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Code\AuthHelper.cs" />
     <Compile Include="Code\DBContext.cs" />
     <Compile Include="Default.aspx.cs">
@@ -257,6 +274,34 @@
     <Compile Include="GridViewDetailsPage.aspx.designer.cs">
       <DependentUpon>GridViewDetailsPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OrderDetails.aspx.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderDetails.aspx.designer.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Orders.aspx.cs">
+      <DependentUpon>Orders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Orders.aspx.designer.cs">
+      <DependentUpon>Orders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Preferences.aspx.cs">
+      <DependentUpon>Preferences.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Preferences.aspx.designer.cs">
+      <DependentUpon>Preferences.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Root.master.cs">
       <DependentUpon>Root.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -277,6 +322,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Code\App_LocalResources\" />
+    <Folder Include="Content\App_LocalResources\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

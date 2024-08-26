@@ -1,0 +1,85 @@
+﻿/* General Styles for Cart */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F8FAE5; /* Background color from palette */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.cart-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+    .cart-table th, .cart-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .cart-table th {
+        background-color: #43766C; /* Primary color */
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+.book-image {
+    max-width: 100px;
+    height: auto;
+}
+
+.quantity-label {
+    padding: 0 10px;
+}
+
+.price-label {
+    font-weight: bold;
+}
+
+.total-price {
+    font-size: 1.2em;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #76453B; /* Accent color */
+}
+
+.remove-all-button, .checkout-button {
+    background-color: #43766C; /* Primary color */
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 14px;
+}
+
+    .remove-all-button:hover, .checkout-button:hover {
+        background-color: #3a5a6c; /* Darker shade of primary color */
+    }
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .cart-container, .cart-table {
+        width: 95%;
+        margin: 10px auto;
+    }
+
+    .total-price {
+        font-size: 1em;
+    }
+}

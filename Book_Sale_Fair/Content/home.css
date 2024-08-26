@@ -1,0 +1,121 @@
+﻿/* home.css */
+
+/* Base colors */
+:root {
+    --primary-color: #43766C; /* Primary color */
+    --secondary-color: #B19470; /* Secondary color */
+    --accent-color: #76453B; /* Accent color */
+    --background-color: #F8FAE5; /* Background color */
+}
+
+/* Overall body styles */
+body {
+    background-color: var(--background-color);
+    font-family: Arial, sans-serif;
+    color: var(--primary-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the book cards */
+.book-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fit cards, minimum width of 250px */
+    gap: 20px; /* Space between cards */
+    margin: 0 auto; /* Center the container */
+    max-width: 1200px; /* Optional: Limit the maximum width */
+    padding: 20px;
+}
+
+/* Styling for each book card */
+.book-card {
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+    transition: transform 0.3s ease;
+}
+
+    .book-card:hover {
+        transform: scale(1.03); /* Slight zoom effect on hover */
+    }
+
+    .book-card h3 {
+        font-size: 1.2em;
+        margin: 0 0 10px;
+        color: var(--primary-color);
+    }
+
+    .book-card p {
+        margin: 5px 0;
+    }
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 20px;
+    margin-left:20px;
+}
+
+.search-input {
+    width: calc(100% - 110px);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: #fff;
+}
+
+.search-button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--secondary-color);
+    color: #fff;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+    .search-button:hover {
+        background-color: #8a9abc; /* Slightly darker shade for hover effect */
+    }
+
+.category-filter {
+    margin-bottom: 20px;
+    margin-left:20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-color);
+    background-color: #fff;
+    color: var(--primary-color);
+}
+
+.book-image {
+    width: 100%; /* Make image fit the width of the card */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners for the image */
+    margin-bottom: 10px; /* Space below the image */
+}
+#bookDetails {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 20px;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#bookDetailsTitle {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#bookDetailsImage {
+    margin-top: 10px;
+}

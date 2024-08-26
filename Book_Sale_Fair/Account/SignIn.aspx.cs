@@ -2,6 +2,7 @@
 using DevExpress.Web;
 using Book_Sale_Fair.Model;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Book_Sale_Fair
 {
@@ -11,9 +12,8 @@ namespace Book_Sale_Fair
         {
         }
 
-        protected async void SignInButton_Click(object sender, EventArgs e)
+        protected  void SignInButton_Click(object sender, EventArgs e)
         {
-            // Trim and sanitize user input for the sign-in form
             string userName = UserNameTextBox.Text.Trim();
             string password = PasswordButtonEdit.Text.Trim();
 
@@ -25,34 +25,40 @@ namespace Book_Sale_Fair
 
             try
             {
-                // Check if the user's account is locked
-                bool isAccountLocked = await Task.Run(() => AuthHelper.IsAccountLocked(userName));
+                // Check if account is locked
+                bool isAccountLocked = AuthHelper.IsAccountLocked(userName);
                 if (isAccountLocked)
                 {
                     DisplayError("Your account is locked. Please contact support for assistance.");
                     return;
                 }
 
-                // Perform user authentication asynchronously using the correct SignIn method
-                bool isAuthenticated = await AuthHelper.SignInAsync(userName, password);
+                // Attempt to sign in
+                bool isAuthenticated =  AuthHelper.SignIn(userName, password);
 
                 if (isAuthenticated)
                 {
                     var userInfo = AuthHelper.GetLoggedInUserInfo();
                     if (userInfo != null)
                     {
-                        // Check if the user has set their preferences
-                        bool hasSetPreferences = await Task.Run(() => AuthHelper.HasSetPreferences(userInfo.UserName));
+                        // Set session information
+                        HttpContext.Current.Session["User"] = new ApplicationUser
+                        {
+                            UserName = userInfo.UserName,
+                            FirstName = userInfo.FirstName,
+                            LastName = userInfo.LastName,
+                            Email = userInfo.Email
+                        };
 
+                        // Check if user has set preferences
+                        bool hasSetPreferences =  AuthHelper.HasSetPreferences(userInfo.UserName);
                         if (!hasSetPreferences)
                         {
-                            // Redirect to the Select Preferences page if preferences haven't been set
                             Response.Redirect($"~/Preferences.aspx?username={userInfo.UserName}");
                         }
                         else
                         {
-                            // Redirect to the home page after successful sign-in
-                            Response.Redirect("HomePage.aspx");
+                            Response.Redirect("~/Home.aspx");
                         }
                     }
                 }
@@ -63,6 +69,7 @@ namespace Book_Sale_Fair
             }
             catch (Exception ex)
             {
+                // Log exception and display error message
                 System.Diagnostics.Debug.WriteLine($"Exception in SignInButton_Click: {ex.Message}\n{ex.StackTrace}");
                 DisplayError("An error occurred during sign-in. Please try again.");
             }

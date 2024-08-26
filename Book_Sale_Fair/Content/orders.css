@@ -1,0 +1,126 @@
+﻿/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F8FAE5; /* Background color from palette */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h2 {
+    color: #43766C; /* Primary color */
+    text-align: center;
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.order-info, .add-book-section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.order-table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+    .order-table th, .order-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .order-table th {
+        background-color: #43766C; /* Primary color */
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .order-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+.quantity-label, .total-price-label {
+    font-size: 16px;
+    color: #333;
+}
+
+.quantity-button, .remove-button, .add-book-button, .save-changes-button, .btnView {
+    background-color: #43766C; /* Primary color */
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 14px;
+}
+
+    .quantity-button:hover, .remove-button:hover, .add-book-button:hover, .save-changes-button:hover, .btnView:hover {
+        background-color: #3a5a6c; /* Darker shade of primary color */
+    }
+
+.book-dropdown {
+    width: 80%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.add-book-section {
+    text-align: center;
+}
+
+    .add-book-section select, .add-book-section button {
+        margin: 10px 0;
+    }
+
+.total-price-label {
+    display: block;
+    text-align: right;
+    font-size: 18px;
+    margin: 20px auto;
+    max-width: 800px;
+    color: #333;
+}
+
+.save-changes-button {
+    display: block;
+    width: 150px;
+    margin: 20px auto;
+    font-size: 16px;
+    background-color: #43766C; /* Primary color */
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .order-info, .order-table, .add-book-section {
+        width: 95%;
+        margin: 10px auto;
+    }
+
+    .save-changes-button {
+        width: 90%;
+        font-size: 18px;
+    }
+}

@@ -18,7 +18,7 @@ namespace Book_Sale_Fair.Model
         //
         //sign in related methods
         //
-        public static async Task<bool> SignInAsync(string userName, string password)
+        public static bool SignIn(string userName, string password)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -26,39 +26,35 @@ namespace Book_Sale_Fair.Model
                 System.Diagnostics.Debug.WriteLine($"Hash: {hashPass}");
 
                 var query = @"
-            SELECT UserName, FirstName, LastName, Email, InvalidLoginAttempts, LockoutEndDate, PasswordHash
-            FROM Users
-            WHERE UserName = @UserName";
+        SELECT UserName, FirstName, LastName, Email, InvalidLoginAttempts, LockoutEndDate, PasswordHash
+        FROM Users
+        WHERE UserName = @UserName";
 
                 using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@UserName", userName);
 
-                    await connection.OpenAsync();
-                    using (var reader = await command.ExecuteReaderAsync())
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        if (await reader.ReadAsync())
+                        if (reader.Read())
                         {
                             int invalidAttempts = reader.GetInt32(reader.GetOrdinal("InvalidLoginAttempts"));
                             DateTime? lockoutEndDate = reader.IsDBNull(reader.GetOrdinal("LockoutEndDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("LockoutEndDate"));
 
-                            if (lockoutEndDate.HasValue && lockoutEndDate.Value <= DateTime.Now)
-                            {
-                                ResetInvalidLoginAttempts(userName);
-                                invalidAttempts = 0;
-                                lockoutEndDate = null;
-                            }
-
+                            // Check if the account is locked
                             if (lockoutEndDate.HasValue && lockoutEndDate.Value > DateTime.Now)
                             {
                                 return false; // Account is still locked
                             }
 
-                            if (HashPassword(password) == reader["PasswordHash"].ToString())
+                            // Check if password is correct
+                            if (hashPass == reader["PasswordHash"].ToString())
                             {
-                                // Reset invalid login attempts
+                                // Reset invalid login attempts and lockout
                                 ResetInvalidLoginAttempts(userName);
 
+                                // Check if HttpContext is available
                                 if (HttpContext.Current != null)
                                 {
                                     HttpContext.Current.Session["User"] = new ApplicationUser
@@ -68,14 +64,14 @@ namespace Book_Sale_Fair.Model
                                         LastName = reader["LastName"].ToString(),
                                         Email = reader["Email"].ToString()
                                     };
+
+                                    return true;
                                 }
                                 else
                                 {
                                     // Handle the null context scenario
                                     throw new InvalidOperationException("HttpContext is not available.");
                                 }
-
-                                return true;
                             }
                             else
                             {
@@ -406,8 +402,11 @@ namespace Book_Sale_Fair.Model
         }
         public static ApplicationUser GetLoggedInUserInfo()
         {
-            return HttpContext.Current.Session["User"] as ApplicationUser;
+            var user = HttpContext.Current.Session["User"] as ApplicationUser;
+            System.Diagnostics.Debug.WriteLine(user != null ? $"User found: {user.UserName}" : "User not found in session.");
+            return user;
         }
+
         public static bool HasSetPreferences(string userName)
         {
             using (var connection = new SqlConnection(ConnectionString))

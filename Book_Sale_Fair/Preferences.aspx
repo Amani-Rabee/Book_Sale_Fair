@@ -52,12 +52,13 @@
 <asp:Content ID="Content" ContentPlaceHolderID="PageContent" runat="server">
     <div class="card-container">
         <asp:Repeater ID="rptCategories" runat="server">
-            <ItemTemplate>
-                <div class="card" data-category-id='<%# Eval("CategoryID") %>'>
-                    <h3><%# Eval("CategoryName") %></h3>
-                </div>
-            </ItemTemplate>
-        </asp:Repeater>
+    <ItemTemplate>
+        <div class="card" data-category-id='<%# Eval("CategoryID") %>'>
+            <h3><%# Eval("CategoryName") %></h3>
+        </div>
+    </ItemTemplate>
+</asp:Repeater>
+
     </div>
     <br />
     <asp:Button ID="btnSavePreferences" runat="server" Text="Save Preferences" />

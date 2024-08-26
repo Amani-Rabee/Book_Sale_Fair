@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web.Services;
 using System.Web.UI;
 
-public partial class Preferences : Page
+public partial class Preferences : System.Web.UI.Page
 {
     private string _username;
 
@@ -24,12 +24,13 @@ public partial class Preferences : Page
 
         if (!IsPostBack)
         {
+            
             LoadCategories();
             LoadPreferences();
         }
     }
 
-    private void LoadCategories()
+    protected void LoadCategories()
     {
         string connectionString = "Data Source=AMANI;Initial Catalog=Sample2;Integrated Security=True;";
         string query = "SELECT CategoryID, CategoryName FROM Categories";
@@ -51,10 +52,11 @@ public partial class Preferences : Page
                 });
             }
 
-            rptCategories.DataSource = categories;
-            rptCategories.DataBind();
+        //    rptCategories.DataSource = categories;
+        //    rptCategories.DataBind();
         }
     }
+
 
     private void LoadPreferences()
     {
@@ -103,7 +105,7 @@ public partial class Preferences : Page
     [WebMethod]
     public static bool SavePreferences(List<int> selectedCategories, string username)
     {
-       
+
 
         if (selectedCategories == null || !selectedCategories.Any() || string.IsNullOrEmpty(username))
         {
@@ -172,7 +174,7 @@ public partial class Preferences : Page
             System.Diagnostics.Debug.WriteLine("StackTrace: {0}", ex.StackTrace);
             return false;
         }
-        
+
     }
     public string Username
     {

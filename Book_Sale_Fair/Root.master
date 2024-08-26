@@ -25,15 +25,18 @@
         Width="100%" CssClass="header-menu" SyncSelectionMode="None">
                                 <ItemStyle VerticalAlign="Middle" CssClass="item" />
                                 <Items>
-                                    <dx:MenuItem Text="" ItemStyle-CssClass="image-item vertically-aligned" NavigateUrl="~/">
-                                        <Image SpriteProperties-CssClass="header-logo" />
+                                    <dx:MenuItem Text="Home" NavigateUrl="~/Home.aspx" ItemStyle-CssClass="header-item" />
+                                    <dx:MenuItem Text="Orders" NavigateUrl="~/Orders.aspx" ItemStyle-CssClass="header-item" />
+                                   
+                                    <dx:MenuItem Text="Cart" NavigateUrl="~/Cart.aspx" ItemStyle-CssClass="header-item">
+                                        <Image Url="Content/Images/cart-icon.svg" Width="20px" Height="20px" />
                                     </dx:MenuItem>
                                 </Items>
                                 <ClientSideEvents ItemClick="onLeftMenuItemClick" />
                             </dx:ASPxMenu>
                         </div>
                     
-                         <div class="right-block">
+                        <div class="right-block">
                             <dx:ASPxMenu runat="server" ID="RightAreaMenu" ClientInstanceName="rightAreaMenu"
                                 ItemAutoWidth="false" ItemWrap="false" ShowPopOutImages="False"
                                 SeparatorWidth="0" ApplyItemStyleToTemplates="true"
