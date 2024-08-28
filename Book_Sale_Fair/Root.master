@@ -21,21 +21,23 @@
                     <dx:PanelContent runat="server">
                         <div class="left-block">
                             <dx:ASPxMenu runat="server" ID="LeftAreaMenu" ClientInstanceName="leftAreaMenu"
-        ItemAutoWidth="false" ItemWrap="false" SeparatorWidth="0" EnableHotTrack="false"
-        Width="100%" CssClass="header-menu" SyncSelectionMode="None">
+                                ItemAutoWidth="false" ItemWrap="false" SeparatorWidth="0" EnableHotTrack="false"
+                                Width="100%" CssClass="header-menu" SyncSelectionMode="None">
                                 <ItemStyle VerticalAlign="Middle" CssClass="item" />
                                 <Items>
                                     <dx:MenuItem Text="Home" NavigateUrl="~/Home.aspx" ItemStyle-CssClass="header-item" />
-                                    <dx:MenuItem Text="Orders" NavigateUrl="~/Orders.aspx" ItemStyle-CssClass="header-item" />
-                                   
-                                    <dx:MenuItem Text="Cart" NavigateUrl="~/Cart.aspx" ItemStyle-CssClass="header-item">
+                                    <dx:MenuItem Text="Orders" NavigateUrl="~/Orders.aspx" ItemStyle-CssClass="header-item" Visible="false" Name="OrdersMenuItem" />
+                                    <dx:MenuItem Text="Cart" NavigateUrl="~/Cart.aspx" ItemStyle-CssClass="header-item" Visible="false" Name="CartMenuItem">
                                         <Image Url="Content/Images/cart-icon.svg" Width="20px" Height="20px" />
                                     </dx:MenuItem>
+                                    <dx:MenuItem Text="Add Employee" NavigateUrl="~/Admin/AddEmployee.aspx" ItemStyle-CssClass="header-item" Visible="false" Name="AddEmployeeMenuItem" />
+                                    <dx:MenuItem Text="All Orders" NavigateUrl="~/Employee/AllOrders.aspx" ItemStyle-CssClass="header-item" Visible="false" Name="AllOrdersMenuItem" />
+                                    <dx:MenuItem Text="Add Book" NavigateUrl="~/Employee/AddBook.aspx" ItemStyle-CssClass="header-item" Visible="false" Name="AddBookMenuItem" />
                                 </Items>
                                 <ClientSideEvents ItemClick="onLeftMenuItemClick" />
                             </dx:ASPxMenu>
                         </div>
-                    
+
                         <div class="right-block">
                             <dx:ASPxMenu runat="server" ID="RightAreaMenu" ClientInstanceName="rightAreaMenu"
                                 ItemAutoWidth="false" ItemWrap="false" ShowPopOutImages="False"
@@ -54,7 +56,7 @@
                                         <Items>
                                             <dx:MenuItem Name="SignInItem" Text="Sign in" NavigateUrl="~/Account/SignIn.aspx"></dx:MenuItem>
                                             <dx:MenuItem Name="RegisterItem" Text="Register" NavigateUrl="~/Account/Register.aspx"></dx:MenuItem>
-                                            <dx:MenuItem Name="MyAccountItem" Text="My account" ItemStyle-CssClass="myaccount-item">
+                                            <dx:MenuItem Name="MyAccountItem" Text="My account" ItemStyle-CssClass="myaccount-item" Visible="false">
                                                 <TextTemplate>
                                                     <div class="user-info">
                                                         <div class="avatar">
@@ -67,15 +69,14 @@
                                                     </div>
                                                 </TextTemplate>
                                             </dx:MenuItem>
-                                            <dx:MenuItem Name="SignOutItem" Text="Sign out" Image-Url="Content/Images/sign-out.svg" Image-Height="16px"></dx:MenuItem>
+                                            <dx:MenuItem Name="SignOutItem" Text="Sign out" Image-Url="Content/Images/sign-out.svg" Image-Height="16px" Visible="false"></dx:MenuItem>
                                         </Items>
                                     </dx:MenuItem>
-                                    
                                 </Items>
                                 <ClientSideEvents ItemClick="onRightMenuItemClick" />
                             </dx:ASPxMenu>
                         </div>
-                        
+
                         <div class="dx-clear"></div>
                     </dx:PanelContent>
                 </PanelCollection>

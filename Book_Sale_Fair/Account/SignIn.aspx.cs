@@ -50,15 +50,26 @@ namespace Book_Sale_Fair
                             Email = userInfo.Email
                         };
 
-                        // Check if user has set preferences
-                        bool hasSetPreferences =  AuthHelper.HasSetPreferences(userInfo.UserName);
-                        if (!hasSetPreferences)
+                        if (userInfo.Role == "Admin")
                         {
-                            Response.Redirect($"~/Preferences.aspx?username={userInfo.UserName}");
+                            Response.Redirect("~/Admin/AddEmployee.aspx",false);
+                        }
+                        else if (userInfo.Role == "Employee")
+                        {
+                            Response.Redirect("~/Employee/AllOrders.aspx");
                         }
                         else
                         {
-                            Response.Redirect("~/Home.aspx");
+                            // Check if user has set preferences
+                            bool hasSetPreferences = AuthHelper.HasSetPreferences(userInfo.UserName);
+                            if (!hasSetPreferences)
+                            {
+                                Response.Redirect($"~/Preferences.aspx?username={userInfo.UserName}");
+                            }
+                            else
+                            {
+                                Response.Redirect("~/Home.aspx");
+                            }
                         }
                     }
                 }

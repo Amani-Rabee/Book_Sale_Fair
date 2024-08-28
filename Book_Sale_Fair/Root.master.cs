@@ -17,50 +17,28 @@ namespace Book_Sale_Fair
 
             Page.Header.DataBind();
             UpdateUserMenuItemsVisible();
-            HideUnusedContent();
             UpdateUserInfo();
-            AddHomeAndOrdersMenuItems();
-        }
-
-        protected void HideUnusedContent()
-        {
-            var isAuthenticated = AuthHelper.IsAuthenticated();
-            var isAdmin = false; // Placeholder for admin check
-            var isEmployee = false; // Placeholder for employee check
-
-            if (isAuthenticated)
-            {
-                var loggedInUser = AuthHelper.GetLoggedInUserInfo();
-                if (loggedInUser != null)
-                {
-                    // Logic based on user roles
-                }
-            }
-
-            // Hide or show content based on roles
-            if (isAuthenticated && !isAdmin)
-            {
-                // Example: Hide Admin-specific content
-            }
-
-            if (isAuthenticated && !isEmployee)
-            {
-                // Example: Hide Employee-specific content
-            }
-        }
-
-        protected bool HasContent(Control contentPlaceHolder)
-        {
-            return contentPlaceHolder?.Controls.Count > 0;
         }
 
         protected void UpdateUserMenuItemsVisible()
         {
             var isAuthenticated = AuthHelper.IsAuthenticated();
+            var userRole = AuthHelper.GetUserRole();
+
+            // Show/hide common items
             RightAreaMenu.Items.FindByName("SignInItem").Visible = !isAuthenticated;
             RightAreaMenu.Items.FindByName("RegisterItem").Visible = !isAuthenticated;
             RightAreaMenu.Items.FindByName("MyAccountItem").Visible = isAuthenticated;
             RightAreaMenu.Items.FindByName("SignOutItem").Visible = isAuthenticated;
+
+            // Show/hide menu items based on role
+            LeftAreaMenu.Items.FindByName("OrdersMenuItem").Visible = isAuthenticated && userRole == "Customer";
+            LeftAreaMenu.Items.FindByName("CartMenuItem").Visible = isAuthenticated && userRole == "Customer";
+
+            LeftAreaMenu.Items.FindByName("AddEmployeeMenuItem").Visible = isAuthenticated && userRole == "Admin";
+
+            LeftAreaMenu.Items.FindByName("AllOrdersMenuItem").Visible = isAuthenticated && userRole == "Employee";
+            LeftAreaMenu.Items.FindByName("AddBookMenuItem").Visible = isAuthenticated && userRole == "Employee";
         }
 
         protected void UpdateUserInfo()
@@ -70,64 +48,34 @@ namespace Book_Sale_Fair
                 var userInfo = AuthHelper.GetLoggedInUserInfo();
                 if (userInfo != null)
                 {
-                    var accountMenuItem = (MenuItem)RightAreaMenu.Items.FindByName("MyAccountItem");
-                    if (accountMenuItem != null)
-                    {
-                        var userInfoPanel = (Control)accountMenuItem.FindControl("UserInfoPanel");
-                        if (userInfoPanel != null)
-                        {
-                            var userNameLabel = (ASPxLabel)userInfoPanel.FindControl("UserNameLabel");
-                            var emailLabel = (ASPxLabel)userInfoPanel.FindControl("EmailLabel");
-                            var avatarImage = (ASPxImage)userInfoPanel.FindControl("AvatarImage");
+                    var userNameLabel = (ASPxLabel)FindControlRecursive(RightAreaMenu, "UserNameLabel");
+                    var emailLabel = (ASPxLabel)FindControlRecursive(RightAreaMenu, "EmailLabel");
+                    var avatarImage = (ASPxImage)FindControlRecursive(RightAreaMenu, "AvatarImage");
 
-                            if (userNameLabel != null) userNameLabel.Text = $"{userInfo.FirstName} {userInfo.LastName}";
-                            if (emailLabel != null) emailLabel.Text = userInfo.Email;
-                            if (avatarImage != null) avatarImage.ImageUrl = userInfo.AvatarUrl;
-                        }
-                    }
+                    if (userNameLabel != null) userNameLabel.Text = $"{userInfo.FirstName} {userInfo.LastName}";
+                    if (emailLabel != null) emailLabel.Text = userInfo.Email;
+                    if (avatarImage != null) avatarImage.ImageUrl = userInfo.AvatarUrl ?? "Content/Images/user.svg";
                 }
             }
         }
 
-        protected void AddHomeAndOrdersMenuItems()
+        private Control FindControlRecursive(Control root, string id)
         {
-            var isAuthenticated = AuthHelper.IsAuthenticated();
-            if (isAuthenticated)
+            if (root.ID == id) return root;
+            foreach (Control control in root.Controls)
             {
-                var homeMenuItem = new MenuItem("Home", null, "~/Content/Images/home.svg", "~/Home.aspx");
-                var ordersMenuItem = new MenuItem("Orders", null, "~/Content/Images/orders.svg", "~/Orders.aspx");
-
-                var accountMenuItem = (MenuItem)RightAreaMenu.Items.FindByName("AccountItem");
-                if (accountMenuItem != null)
-                {
-                    var signOutItemIndex = accountMenuItem.Items.IndexOf(accountMenuItem.Items.FindByName("SignOutItem"));
-
-                    if (!accountMenuItem.Items.Contains(homeMenuItem))
-                    {
-                        accountMenuItem.Items.Insert(signOutItemIndex, homeMenuItem);
-                    }
-
-                    if (!accountMenuItem.Items.Contains(ordersMenuItem))
-                    {
-                        accountMenuItem.Items.Insert(signOutItemIndex + 1, ordersMenuItem);
-                    }
-                }
+                var foundControl = FindControlRecursive(control, id);
+                if (foundControl != null) return foundControl;
             }
+            return null;
         }
-
-        protected void RightAreaMenu_ItemClick(object source, DevExpress.Web.MenuItemEventArgs e)
+        protected void RightAreaMenu_ItemClick(object source, MenuItemEventArgs e)
         {
             if (e.Item.Name == "SignOutItem")
             {
                 AuthHelper.SignOut();
-                Response.Redirect("~/");
+                Response.Redirect("~/Home.aspx");
             }
-        }
-
-        protected void ApplicationMenu_ItemDataBound(object source, MenuItemEventArgs e)
-        {
-            e.Item.Image.Url = string.Format("Content/Images/{0}.svg", e.Item.Text);
-            e.Item.Image.UrlSelected = string.Format("Content/Images/{0}-white.svg", e.Item.Text);
         }
     }
 }

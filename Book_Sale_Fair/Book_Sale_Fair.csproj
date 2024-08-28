@@ -75,13 +75,11 @@
     <Content Include="Account\ResetPassword.aspx" />
     <Content Include="Account\SignIn.aspx" />
     <Content Include="Account\VerifyEmail.aspx" />
+    <Content Include="Admin\AddEmployee.aspx" />
     <Content Include="App_Data\ApplicationMenuDataSource.sitemap" />
-    <Content Include="App_Data\Article.html" />
-    <Content Include="App_Data\ArticleContents.xml" />
-    <Content Include="App_Data\Overview.html" />
-    <Content Include="App_Data\OverviewContents.xml" />
-    <Content Include="Article.aspx" />
     <Content Include="Cart.aspx" />
+    <Content Include="Content\AddBook.css" />
+    <Content Include="Content\AddEmployee.css" />
     <Content Include="Content\cart.css" />
     <Content Include="Content\Content.css" />
     <Content Include="Content\GridView.css" />
@@ -177,14 +175,13 @@
     <Content Include="Content\SignInRegister.css" />
     <Content Include="Content\SignInRegister.js" />
     <Content Include="Default.aspx" />
+    <Content Include="Employee\AddBook.aspx" />
+    <Content Include="Employee\AllOrders.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="GridView.aspx" />
-    <Content Include="GridViewDetailsPage.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="OrderDetails.aspx" />
     <Content Include="Orders.aspx" />
     <Content Include="Preferences.aspx" />
-    <Content Include="Scheduler.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Root.master" />
@@ -234,12 +231,12 @@
     <Compile Include="Account\VerifyEmail.aspx.designer.cs">
       <DependentUpon>VerifyEmail.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Article.aspx.cs">
-      <DependentUpon>Article.aspx</DependentUpon>
+    <Compile Include="Admin\AddEmployee.aspx.cs">
+      <DependentUpon>AddEmployee.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Article.aspx.designer.cs">
-      <DependentUpon>Article.aspx</DependentUpon>
+    <Compile Include="Admin\AddEmployee.aspx.designer.cs">
+      <DependentUpon>AddEmployee.aspx</DependentUpon>
     </Compile>
     <Compile Include="Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
@@ -257,22 +254,22 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Employee\AddBook.aspx.cs">
+      <DependentUpon>AddBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employee\AddBook.aspx.designer.cs">
+      <DependentUpon>AddBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Employee\AllOrders.aspx.cs">
+      <DependentUpon>AllOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employee\AllOrders.aspx.designer.cs">
+      <DependentUpon>AllOrders.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="GridView.aspx.cs">
-      <DependentUpon>GridView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GridView.aspx.designer.cs">
-      <DependentUpon>GridView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GridViewDetailsPage.aspx.cs">
-      <DependentUpon>GridViewDetailsPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GridViewDetailsPage.aspx.designer.cs">
-      <DependentUpon>GridViewDetailsPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
@@ -308,13 +305,6 @@
     </Compile>
     <Compile Include="Root.master.designer.cs">
       <DependentUpon>Root.master</DependentUpon>
-    </Compile>
-    <Compile Include="Scheduler.aspx.cs">
-      <DependentUpon>Scheduler.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Scheduler.aspx.designer.cs">
-      <DependentUpon>Scheduler.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

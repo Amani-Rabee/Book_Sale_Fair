@@ -63,11 +63,17 @@ namespace Book_Sale_Fair
         {
             if (e.CommandName == "AddToCart")
             {
-                int bookId = Convert.ToInt32(e.CommandArgument);
-                string userName = AuthHelper.GetLoggedInUserInfo().UserName;
-                AddToCart(userName, bookId);
+                if (AuthHelper.IsAuthenticated()&&AuthHelper.GetUserRole()=="Customer")
+                {
+                    int bookId = Convert.ToInt32(e.CommandArgument);
+                    string userName = AuthHelper.GetLoggedInUserInfo().UserName;
+                    AddToCart(userName, bookId);
 
-                System.Diagnostics.Debug.WriteLine($"Book ID {bookId} added to cart for user {userName}");
+                    System.Diagnostics.Debug.WriteLine($"Book ID {bookId} added to cart for user {userName}");
+                } else
+                {
+                    Response.Redirect("~/Account/SignIn.aspx");
+                }
             }
         }
 

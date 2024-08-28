@@ -1,0 +1,94 @@
+﻿:root {
+    --primary-color: #43766C; /* Primary color */
+    --secondary-color: #B19470; /* Secondary color */
+    --accent-color: #76453B; /* Accent color */
+    --background-color: #F8FAE5; /* Background color */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    font-size: 14px;
+}
+.total-books {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+.content-section {
+    display: flex;
+    gap: 20px;
+}
+
+.form-section {
+    flex: 1;
+}
+
+.grid-section {
+    flex: 2;
+    background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+    .grid-section .dxgv {
+        border-color: var(--primary-color);
+    }
+
+.dxgv {
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    width: 100%;
+}
+
+    .dxgv .dxgvHeader {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .dxgv .dxgvRow {
+        background-color: white;
+    }
+
+        .dxgv .dxgvRow:nth-child(odd) {
+            background-color: var(--primary-color);
+        }
+
+        .dxgv .dxgvRow:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.dx-textbox, .dx-combobox {
+    margin-bottom: 10px;
+}

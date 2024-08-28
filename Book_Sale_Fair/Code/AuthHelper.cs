@@ -14,7 +14,7 @@ namespace Book_Sale_Fair.Model
     {
         private static readonly int MaxInvalidAttempts = 5;
         private static readonly int LockoutDurationMinutes = 15;
-        private static string ConnectionString = "Data Source=AMANI;Initial Catalog=Sample2;Integrated Security=True;";
+        public static string ConnectionString = "Data Source=AMANI;Initial Catalog=Sample2;Integrated Security=True;";
         //
         //sign in related methods
         //
@@ -26,9 +26,9 @@ namespace Book_Sale_Fair.Model
                 System.Diagnostics.Debug.WriteLine($"Hash: {hashPass}");
 
                 var query = @"
-        SELECT UserName, FirstName, LastName, Email, InvalidLoginAttempts, LockoutEndDate, PasswordHash
-        FROM Users
-        WHERE UserName = @UserName";
+SELECT UserName, FirstName, LastName, Email, InvalidLoginAttempts, LockoutEndDate, PasswordHash, Role
+FROM Users
+WHERE UserName = @UserName";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -41,6 +41,7 @@ namespace Book_Sale_Fair.Model
                         {
                             int invalidAttempts = reader.GetInt32(reader.GetOrdinal("InvalidLoginAttempts"));
                             DateTime? lockoutEndDate = reader.IsDBNull(reader.GetOrdinal("LockoutEndDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("LockoutEndDate"));
+                            string userRole = reader["Role"].ToString();
 
                             // Check if the account is locked
                             if (lockoutEndDate.HasValue && lockoutEndDate.Value > DateTime.Now)
@@ -62,8 +63,11 @@ namespace Book_Sale_Fair.Model
                                         UserName = reader["UserName"].ToString(),
                                         FirstName = reader["FirstName"].ToString(),
                                         LastName = reader["LastName"].ToString(),
-                                        Email = reader["Email"].ToString()
+                                        Email = reader["Email"].ToString(),
+                                        Role = userRole // Store the role here
                                     };
+
+                                    HttpContext.Current.Session["UserRole"] = userRole; // Store the role separately
 
                                     return true;
                                 }
@@ -368,7 +372,7 @@ namespace Book_Sale_Fair.Model
                 }
             }
         }
-        private static string HashPassword(string password)
+        public static string HashPassword(string password)
         {
             using (var sha256 = SHA256.Create())
             {
@@ -423,6 +427,13 @@ namespace Book_Sale_Fair.Model
             }
         }
 
+        public static string GetUserRole()
+        {
+            // Assuming the user role is stored in the session
+            return HttpContext.Current.Session["UserRole"] as string;
+        }
+
+
 
 
 
@@ -435,5 +446,6 @@ namespace Book_Sale_Fair.Model
         public string LastName { get; set; }
         public string Email { get; set; }
         public string AvatarUrl { get; set; }
+        public string Role { get; set; }
     }
 }

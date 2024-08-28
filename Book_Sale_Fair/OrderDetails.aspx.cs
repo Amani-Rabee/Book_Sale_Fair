@@ -9,7 +9,6 @@ namespace Book_Sale_Fair
     public partial class OrderDetails : System.Web.UI.Page
     {
         private static string ConnectionString = "Data Source=AMANI;Initial Catalog=Sample2;Integrated Security=True;";
-
         protected void Page_Load(object sender, EventArgs e)
         {
             // Check if the user is authenticated
@@ -19,16 +18,63 @@ namespace Book_Sale_Fair
                 Response.Redirect("~/account/SignIn.aspx");
                 return; // Ensure no further processing occurs
             }
+
+            // Check the user's role
+            string userRole = AuthHelper.GetUserRole();
+            string orderStatus = string.Empty;
+
             if (!IsPostBack)
             {
                 LoadOrderDetails();
                 LoadBooksDropdown();
+
+                // Check the current status of the order
+                orderStatus = lblOrderStatus.Text.Replace("Order Status: ", "").Trim();
+                SetControlAccess(userRole, orderStatus);
             }
+            else
+            {
+                orderStatus = lblOrderStatus.Text.Replace("Order Status: ", "").Trim();
+            }
+
+            // Enable or disable controls based on user role and order status
+            SetControlAccess(userRole, orderStatus);
         }
+
+        private void SetControlAccess(string userRole, string orderStatus)
+        {
+            bool isCustomer = userRole == "Customer";
+            bool isPending = orderStatus == "Pending";
+
+            foreach (GridViewRow row in gvOrderItems.Rows)
+            {
+                Button btnIncreaseQuantity = row.FindControl("btnIncreaseQuantity") as Button;
+                Button btnDecreaseQuantity = row.FindControl("btnDecreaseQuantity") as Button;
+                Button btnRemoveItem = row.FindControl("btnRemoveItem") as Button;
+
+                if (btnIncreaseQuantity != null)
+                {
+                    btnIncreaseQuantity.Visible = isCustomer && isPending;
+                }
+
+                if (btnDecreaseQuantity != null)
+                {
+                    btnDecreaseQuantity.Visible = isCustomer && isPending;
+                }
+
+                if (btnRemoveItem != null)
+                {
+                    btnRemoveItem.Visible = isCustomer && isPending;
+                }
+            }
+
+            ddlBooks.Visible = isCustomer && isPending;
+            btnAddBook.Visible = isCustomer && isPending;
+        }
+
 
         private void LoadOrderDetails()
         {
-            // Assume we get OrderID from query string
             int orderId = Convert.ToInt32(Request.QueryString["OrderID"]);
 
             using (var conn = new SqlConnection(ConnectionString))
@@ -72,69 +118,87 @@ namespace Book_Sale_Fair
             }
         }
 
+
         protected void btnIncreaseQuantity_Click(object sender, EventArgs e)
         {
-            var btn = (Button)sender;
-            int orderItemId = Convert.ToInt32(btn.CommandArgument);
-
-            using (var conn = new SqlConnection(ConnectionString))
+            if (IsCustomer())
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE OrderItems SET Quantity = Quantity + 1 WHERE OrderItemID = @OrderItemID", conn);
-                cmd.Parameters.AddWithValue("@OrderItemID", orderItemId);
-                cmd.ExecuteNonQuery();
-            }
+                var btn = (Button)sender;
+                int orderItemId = Convert.ToInt32(btn.CommandArgument);
 
-            LoadOrderDetails();
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("UPDATE OrderItems SET Quantity = Quantity + 1 WHERE OrderItemID = @OrderItemID", conn);
+                    cmd.Parameters.AddWithValue("@OrderItemID", orderItemId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                LoadOrderDetails();
+            }
         }
 
         protected void btnDecreaseQuantity_Click(object sender, EventArgs e)
         {
-            var btn = (Button)sender;
-            int orderItemId = Convert.ToInt32(btn.CommandArgument);
-
-            using (var conn = new SqlConnection(ConnectionString))
+            if (IsCustomer())
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE OrderItems SET Quantity = Quantity - 1 WHERE OrderItemID = @OrderItemID", conn);
-                cmd.Parameters.AddWithValue("@OrderItemID", orderItemId);
-                cmd.ExecuteNonQuery();
-            }
+                var btn = (Button)sender;
+                int orderItemId = Convert.ToInt32(btn.CommandArgument);
 
-            LoadOrderDetails();
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("UPDATE OrderItems SET Quantity = Quantity - 1 WHERE OrderItemID = @OrderItemID", conn);
+                    cmd.Parameters.AddWithValue("@OrderItemID", orderItemId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                LoadOrderDetails();
+            }
         }
 
         protected void btnRemoveItem_Click(object sender, EventArgs e)
         {
-            var btn = (Button)sender;
-            int orderItemId = Convert.ToInt32(btn.CommandArgument);
-
-            using (var conn = new SqlConnection(ConnectionString))
+            if (IsCustomer())
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("DELETE FROM OrderItems WHERE OrderItemID = @OrderItemID", conn);
-                cmd.Parameters.AddWithValue("@OrderItemID", orderItemId);
-                cmd.ExecuteNonQuery();
-            }
+                var btn = (Button)sender;
+                int orderItemId = Convert.ToInt32(btn.CommandArgument);
 
-            LoadOrderDetails();
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("DELETE FROM OrderItems WHERE OrderItemID = @OrderItemID", conn);
+                    cmd.Parameters.AddWithValue("@OrderItemID", orderItemId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                LoadOrderDetails();
+            }
         }
 
         protected void btnAddBook_Click(object sender, EventArgs e)
         {
-            int bookId = Convert.ToInt32(ddlBooks.SelectedValue);
-            int orderId = Convert.ToInt32(Request.QueryString["OrderID"]);
-
-            using (var conn = new SqlConnection(ConnectionString))
+            if (IsCustomer())
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO OrderItems (OrderID, BookID, Quantity) VALUES (@OrderID, @BookID, 1)", conn);
-                cmd.Parameters.AddWithValue("@OrderID", orderId);
-                cmd.Parameters.AddWithValue("@BookID", bookId);
-                cmd.ExecuteNonQuery();
-            }
+                int bookId = Convert.ToInt32(ddlBooks.SelectedValue);
+                int orderId = Convert.ToInt32(Request.QueryString["OrderID"]);
 
-            LoadOrderDetails();
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("INSERT INTO OrderItems (OrderID, BookID, Quantity) VALUES (@OrderID, @BookID, 1)", conn);
+                    cmd.Parameters.AddWithValue("@OrderID", orderId);
+                    cmd.Parameters.AddWithValue("@BookID", bookId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                LoadOrderDetails();
+            }
+        }
+
+        private bool IsCustomer()
+        {
+            return AuthHelper.GetUserRole() == "Customer";
         }
 
         private void UpdateTotalPrice(DataTable orderItems)
@@ -150,10 +214,9 @@ namespace Book_Sale_Fair
 
             lblTotalPrice.Text = $"Total Price: {totalPrice:C}";
         }
-
         protected void btnSaveChanges_Click(object sender, EventArgs e)
         {
-            
+
             LoadOrderDetails();
         }
     }
